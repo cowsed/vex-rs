@@ -1,14 +1,7 @@
 use std::env;
 use std::path::PathBuf;
 
-fn main() {
-    // Tell cargo to look for shared libraries in the specified directory
-    // println!("cargo:rustc-link-search=/path/to/lib");
-
-    // Tell cargo to tell rustc to link the system bzip2
-    // shared library.
-    // println!("cargo:rustc-link-lib=bz2");
-
+fn build_vex_binding() {
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=src/vex_headers/wrapper.hpp");
 
@@ -36,4 +29,10 @@ fn main() {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
+}
+
+fn main() {
+    build_vex_binding();
+    // let sdk_loc = "/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/";
+
 }

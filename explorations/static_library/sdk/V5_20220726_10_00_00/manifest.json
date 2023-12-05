@@ -1,0 +1,17 @@
+{
+  "version"   : "20220726.10.00.00",
+  
+  "platforms" : [
+    {
+      "name"        : "vexv5",
+      "version"     : "20220726.10.00.00",
+      "vexos"       : "1.1.2",
+
+      "sdk"         : "1.1.2.1",
+      "copyright"   : "VEX Robotics Inc.",
+      "product"     : "276-4810",
+      "description" : "VEX V5 runtime library",
+      "license"     : "license.pdf"
+    }
+  ]
+}
