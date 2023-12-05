@@ -7,7 +7,7 @@
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 extern crate alloc; // yes alloc
-use core::alloc::Layout;
+use core::{alloc::Layout};
 use newlib_alloc::Alloc;
 
 #[global_allocator]
@@ -34,16 +34,11 @@ pub fn safe_print(s: String) {
 }
 
 unsafe extern "C" fn opcontrol() {
-    // motor 4 left fwd
-    // motor 2 right reversred
-    // uint32_t              vexDevicesGetNumberByType( V5_DeviceType type );
-    // V5_DeviceT            vexDevicesGet( void );
-    // V5_DeviceT            vexDeviceGetByIndex( uint32_t index );
-    let lmot = vexDeviceGetByIndex(vex_PORT2 as u32);
+    let left_front_mot = vexDeviceGetByIndex(vex_PORT1 as u32);
+    let left_rear_mot = vexDeviceGetByIndex(vex_PORT2 as u32);
+    let right_front_mot = vexDeviceGetByIndex(vex_PORT3 as u32);
+    let right_back_mot = vexDeviceGetByIndex(vex_PORT4 as u32);
 
-    let rmot = vexDeviceGetByIndex(vex_PORT4 as u32);
-
-    safe_print("Hello from opcontrol\n".into());
     loop {
         let lstick = (vexControllerGet(
             _V5_ControllerId_kControllerMaster,
@@ -56,23 +51,28 @@ unsafe extern "C" fn opcontrol() {
         ) as f32)
             / 127.0;
 
-        let max_motor = 10000.0;
+        let max_motor = 100000.0;
         let lmot_volts = (max_motor * lstick) as i32;
         let rmot_volts = (max_motor * rstick) as i32;
-        vexDisplayBackgroundColor(0x0000000);
-        vexDisplayForegroundColor(0x0000000);
-        vexDisplayRectFill(0, 0, 300, 200);
-        safe_print(lstick.to_string() + " lstick");
 
-        vexDeviceMotorVoltageSet(lmot, -lmot_volts);
-        vexDeviceMotorVoltageSet(rmot, rmot_volts);
+        // vexDisplayBackgroundColor(0x0000000);
+        // vexDisplayForegroundColor(0x0000000);
+        // vexDisplayRectFill(0, 0, 300, 200);
+        // safe_print(lstick.to_string() + " lstick");
+        //
+        vexDeviceMotorVoltageSet(left_rear_mot, -lmot_volts);
+        vexDeviceMotorVoltageSet(left_front_mot, -lmot_volts);
+        vexDeviceMotorVoltageSet(right_front_mot, rmot_volts);
+        vexDeviceMotorVoltageSet(right_back_mot, rmot_volts);
+        // vexDebug(s.as_c_str().as_ptr());
+
         vexDelay(20);
     }
 }
 
 #[no_mangle]
 pub extern "C" fn main() {
-    safe_print("Hello from rust2\n".into());
+    safe_print("Hello from rust\n".into());
 
     unsafe {
         let mut comp: vex_competition = vex_competition::new();
@@ -81,5 +81,29 @@ pub extern "C" fn main() {
 }
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
-    loop {}
+    let s = _info.to_string();
+    let s = CString::new(s).unwrap();
+    let s = s.as_c_str();
+
+    unsafe {
+        loop {
+            vexDisplayBackgroundColor(ClrRed);
+            vexDisplayForegroundColor(ClrRed);
+            vexDisplayRectFill(0, 0, 480, 232);
+            vexDisplayForegroundColor(ClrWhite);
+            vexDisplayTextSize(5, 5);
+            vexDisplayString(1, s.as_ptr());
+            vexDisplayRender(true, true);
+            vexDelay(250);
+
+            vexDisplayBackgroundColor(ClrBlack);
+            vexDisplayForegroundColor(ClrBlack);
+            vexDisplayRectFill(0, 0, 480, 240);
+            vexDisplayForegroundColor(ClrWhite);
+            vexDisplayTextSize(5, 5);
+            vexDisplayString(1, s.as_ptr());
+            vexDisplayRender(true, true);
+            vexDelay(250);
+        }
+    }
 }

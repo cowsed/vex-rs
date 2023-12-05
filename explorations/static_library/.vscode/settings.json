@@ -1,0 +1,4 @@
+{
+  "rust-analyzer.cargo.target": "armv7a-vex-eabi.json",
+  "rust-analyzer.check.allTargets": false,
+}
