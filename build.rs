@@ -53,10 +53,6 @@ fn download_sdk(out_dir: &String) {
     let full_zip_path = format!("{}/{}", out_dir, SDK_ZIP_PATH);
     let full_zip_path = full_zip_path.as_str();
 
-    if Path::new(full_zip_path).exists() {
-        // already got it
-        return;
-    }
     let mut dst = Vec::new();
     let mut easy = Easy::new();
     easy.url(
@@ -134,8 +130,8 @@ fn main() {
         env::var("OUT_DIR").expect("Need OUT_DIR defined to know where to build this stuff to");
 
     let bindings_path = format!("{}/bindings.rs", out_dir);
-    let bindings_path = bindings_path.as_str();
-    if !Path::new(bindings_path).exists() {
+    
+    if !Path::new(bindings_path.as_str()).exists() {
         download_sdk(&out_dir);
         unzip_sdk(&out_dir);
         remove_unbindables(&out_dir);

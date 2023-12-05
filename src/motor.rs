@@ -24,12 +24,18 @@ pub enum Port {
 pub struct Motor {
     port: Port,
 }
+impl Motor{
+    fn new() -> Motor{
+        todo!("make sure motor type aligns with what vex thinks is plugged in there");
+    }
+}
 
 impl Motor{
     fn set_voltage(volts: f32){
-        todo!()
+        todo!("set voltage")
     }
     fn get_rotations() -> f32{
+        todo!("get rotations");
         return 0.0
     }
 }

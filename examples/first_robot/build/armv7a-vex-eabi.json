@@ -1,0 +1,30 @@
+{
+    "arch": "arm",
+    "data-layout": "e-m:e-p:32:32-Fi8-i64:64-v128:64:128-a:0:32-n32-S64",
+    "disable-redzone": true,
+    "emit-debug-gdb-scripts": false,
+    "env": "newlib",
+    "executables": true,
+    "features": "+v7,+thumb2,+soft-float,-neon,+strict-align",
+    "linker": "arm-none-eabi-ld",
+    "post-link-args": {
+      "ld": [
+        "-nostdlib",
+        "-T \"sdk/vexv5/lscript.ld\"",
+        "-R \"sdk/vexv5/stdlib_0.lib\"",
+        "--gc-sections",
+        "-L\"sdk/vexv5\" -L\"sdk/vexv5/gcc/libs\"",
+        "--start-group -lv5rt -lstdc++ -lc -lm -lgcc  --end-group"
+      ]
+    },
+    "llvm-target": "armv7a-none-eabi",
+    "max-atomic-width": 64,
+    "os": "none",
+    "panic-strategy": "abort",
+    "relocation-model": "static",
+    "target-c-int-width": "32",
+    "target-family": "unix",
+    "target-endian": "little",
+    "target-pointer-width": "32",
+    "vendor": "vex"
+  }

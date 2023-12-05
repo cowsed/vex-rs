@@ -255,6 +255,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "first_robot"
+version = "0.1.0"
+dependencies = [
+ "vex-rs",
+]
+
+[[package]]
 name = "flate2"
 version = "1.0.28"
 source = "registry+https://github.com/rust-lang/crates.io-index"
