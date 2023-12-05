@@ -1,6 +1,7 @@
 use std::env;
 use std::path::PathBuf;
 
+
 fn build_vex_binding() {
     // Tell cargo to invalidate the built crate whenever the wrapper changes
     println!("cargo:rerun-if-changed=src/vex_headers/wrapper.hpp");

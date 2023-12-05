@@ -1,0 +1,1 @@
+{"rustc":4521585176149785345,"features":"[\"default\", \"std\"]","target":15096661004575481746,"profile":17504242664759948721,"path":14313361455241374957,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"release/.fingerprint/rustc-hash-d96c512e2195552d/dep-lib-rustc-hash"}}],"rustflags":[],"metadata":8748413593772538637,"config":2202906307356721367,"compile_kind":0}

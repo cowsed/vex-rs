@@ -1,0 +1,14 @@
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/deps/clang_sys-192f2b1b0da2805b.rmeta: /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/lib.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/support.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/link.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/macros.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/common.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/dynamic.rs
+
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/deps/libclang_sys-192f2b1b0da2805b.rlib: /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/lib.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/support.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/link.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/macros.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/common.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/dynamic.rs
+
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/deps/clang_sys-192f2b1b0da2805b.d: /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/lib.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/support.rs /home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/link.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/macros.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/common.rs /home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/dynamic.rs
+
+/home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/lib.rs:
+/home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/support.rs:
+/home/richie/.cargo/registry/src/index.crates.io-6f17d22bba15001f/clang-sys-1.6.1/src/link.rs:
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/macros.rs:
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/common.rs:
+/home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out/dynamic.rs:
+
+# env-dep:OUT_DIR=/home/richie/VEX/vex-rs/explorations/static_library/target/release/build/clang-sys-033dbbf91b6f732c/out
