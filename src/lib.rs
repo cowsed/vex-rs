@@ -1,7 +1,5 @@
 #![no_std]
 #![no_main]
-// #![feature(alloc_error_handler)]
-
 pub enum Port {
     Port1,
     Port2,
