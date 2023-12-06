@@ -1,4 +1,4 @@
-use crate::Port;
+use crate::types::Port;
 
 pub struct Motor {
     pub port: Port,
