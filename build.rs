@@ -1,9 +1,6 @@
 const VERSION: &str = "V5_20220726_10_00_00";
 const SDK_ZIP_PATH: &str = "sdk.zip";
 
-const HEADERS_DIRECTORY: &str = "vexv5/include";
-// const WRAPPER_PATH: &str = "src/wrapper.hpp";
-
 use curl::easy::Easy;
 use std::fs;
 use std::fs::File;
@@ -14,9 +11,8 @@ use std::path::PathBuf;
 use std::{env, vec};
 use zip::read::ZipArchive;
 
-fn make_vex_bindings(out_dir: &String) {
-    let header_path =
-        |fname: &str| format!("{}/{}/{}/{}", out_dir, VERSION, HEADERS_DIRECTORY, fname);
+fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
+    let header_path = |fname: &str| format!("{}/include/{}", sdk_path, fname);
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
     // the resulting bindings.
@@ -33,8 +29,13 @@ fn make_vex_bindings(out_dir: &String) {
         .header(header_path("vex_color.h"))
         .header(header_path("vex_timer.h"))
         .header(header_path("vex_device.h"))
-        .header(header_path("vex_brain.h"))
+        // Do the silly with vex_brain. bindgen does not like it's templates
+        .header_contents(
+            header_path("vex_brain.h").as_str(),
+            remove_unbindables(sdk_path).as_str(),
+        )
         .header(header_path("vex_competition.h"))
+        .blocklist_function("arg")
         // Finish the builder and generate the bindings.
         .generate()
         .expect("Unable to generate bindings");
@@ -92,7 +93,7 @@ fn unzip_sdk(out_dir: &String) {
 }
 
 // bindgen really does not like the templates in vex_brain.h
-fn remove_unbindables(out_dir: &String) {
+fn remove_unbindables(sdk_path: &String) -> String {
     let ranges: Vec<(usize, usize)> = vec![
         (131, 134),
         (155, 160),
@@ -104,7 +105,7 @@ fn remove_unbindables(out_dir: &String) {
     ];
     let in_range = |i, &(lo, hi)| i >= lo && i <= hi;
 
-    let path = format!("{}/{}/{}/vex_brain.h", out_dir, VERSION, HEADERS_DIRECTORY);
+    let path = format!("{}/include/vex_brain.h", sdk_path);
     let str = fs::read_to_string(&path).expect("Couldn't open vex_brain.h to fix template stuff");
 
     let oglines: Vec<&str> = str.lines().collect();
@@ -122,7 +123,38 @@ fn remove_unbindables(out_dir: &String) {
         }
     }
 
-    fs::write(path, src_wout).expect("Unable to vex_brain.h when fixing unbindables");
+    return src_wout;
+}
+
+#[derive(Debug, Clone, Copy)]
+enum PathFindError {
+    NoBuiltinPath,
+}
+
+fn find_sdk_path(out_dir: &String) -> Result<String, PathFindError> {
+    let builtin_sdk_path = env::var("VEX_SDK_PATH");
+    if builtin_sdk_path.is_ok() {
+        let p = builtin_sdk_path.unwrap();
+        if Path::new(p.as_str()).exists() {
+            return Ok(p);
+        }
+    }
+
+    let vscode_sdk_path_linux = format!(
+        "~/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/{}/vexv5",
+        VERSION
+    );
+    if Path::new(vscode_sdk_path_linux.as_str()).exists() {
+        return Ok(vscode_sdk_path_linux.into());
+    }
+
+    // Or if we have them from a previous install
+    let target_path = format!("{}/{}/vexv5", out_dir, VERSION);
+    if Path::new(target_path.as_str()).exists() {
+        return Ok(target_path);
+    }
+
+    return Err(PathFindError::NoBuiltinPath);
 }
 
 fn main() {
@@ -130,11 +162,33 @@ fn main() {
         env::var("OUT_DIR").expect("Need OUT_DIR defined to know where to build this stuff to");
 
     let bindings_path = format!("{}/bindings.rs", out_dir);
-    
-    if !Path::new(bindings_path.as_str()).exists() {
+
+    // have to rebuild
+    let builtin_path = find_sdk_path(&out_dir);
+    if !builtin_path.is_ok() {
+        // need to download sdk
+        println!("cargo:warning=Couldn't find system headers. Specify in the VEX_SDK_PATH environment variable to use those headers. Downloading them now");
+
         download_sdk(&out_dir);
         unzip_sdk(&out_dir);
-        remove_unbindables(&out_dir);
-        make_vex_bindings(&out_dir);
+    } else {
+        println!(
+            "cargo:warning=Using installed headers at {}",
+            builtin_path.unwrap()
+        );
     }
+
+    let sdk_path = find_sdk_path(&out_dir).unwrap(); // we just created the path if it wasnt there. so it should be there now
+    if !Path::new(bindings_path.as_str()).exists() {
+        make_vex_bindings(&sdk_path, &out_dir);
+    }
+    println!("cargo:rustc-link-search={}", sdk_path);
+    println!("cargo:rustc-link-search={}/gcc/libs", sdk_path);
+    println!("cargo:rustc-link-arg=-R{}/vexv5/stdlib_0.lib", sdk_path);
+
+    println!("cargo:rustc-link-lib=static=v5rt");
+    println!("cargo:rustc-link-lib=static=stdc++");
+    println!("cargo:rustc-link-lib=static=c");
+    println!("cargo:rustc-link-lib=static=m");
+    println!("cargo:rustc-link-lib=static=gcc");
 }

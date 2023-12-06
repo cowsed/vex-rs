@@ -4,20 +4,19 @@
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 extern crate alloc;
-use core::alloc::Layout;
 use newlib_alloc::Alloc;
 
 #[global_allocator]
 static ALLOCATOR: Alloc = Alloc;
 
-#[alloc_error_handler]
-fn handle(layout: Layout) -> ! {
-    panic!("memory allocation failed: {:#?}", layout);
-}
+// #[alloc_error_handler]
+// fn handle(layout: Layout) -> ! {
+    // panic!("memory allocation failed: {:#?}", layout);
+// }
 
 use alloc::{
     ffi::CString,
-    string::{String, ToString},
+    string::ToString,
 };
 
 
