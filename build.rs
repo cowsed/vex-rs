@@ -35,7 +35,6 @@ fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
             remove_unbindables(sdk_path).as_str(),
         )
         .header(header_path("vex_competition.h"))
-        .blocklist_function("arg")
         // Finish the builder and generate the bindings.
         .generate()
         .expect("Unable to generate bindings");
