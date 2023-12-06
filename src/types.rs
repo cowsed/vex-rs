@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy)]
+#[derive( Clone, Copy)]
 pub enum Port {
     Port1,
     Port2,
@@ -56,14 +56,14 @@ pub enum Direction {
     Reverse,
 }
 
-#[derive(Debug, Clone)]
+#[derive( Clone)]
 pub struct Rect {
     pub x1: i32,
     pub y1: i32,
     pub x2: i32,
     pub y2: i32,
 }
-#[derive(Debug, Clone, Copy)]
+#[derive( Clone, Copy)]
 pub struct Color {
     pub r: u8,
     pub g: u8,

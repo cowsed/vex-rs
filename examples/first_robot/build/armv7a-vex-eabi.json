@@ -10,7 +10,7 @@
     "post-link-args": {
       "gcc": [
         "-nostdlib",
-        "-Wl,--allow-multiple-definition",
+		"-nodefaultlibs",
         "-Wl,--gc-sections",
         "-Wl,-T/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/vexv5/lscript.ld"
       ]

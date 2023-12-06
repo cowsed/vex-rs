@@ -6,9 +6,13 @@ use vex_rs::{
     motor::Motor,
     screen, time, Color, PORT1, PORT2,
 };
+extern crate alloc;
+use alloc::string::ToString;
+
 
 #[no_mangle]
 fn main() {
+    op();
     competition::set_opcontrol(op);
     competition::set_autonomous(auto);
 }
@@ -23,6 +27,8 @@ fn op() {
 
         lmot.set_voltage(12.0 * lstick);
         rmot.set_voltage(12.0 * rstick);
+		let s = lstick.to_string();
+		screen::draw_text(0, 12, &s);
 
         time::delay_ms(20);
     }

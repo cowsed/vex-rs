@@ -6,8 +6,8 @@ pub struct Motor {
 
 impl Motor {
     pub fn new(_port: Port) -> Motor {
+        // return Motor{port: _port};
         todo!("make sure motor type aligns with what vex thinks is plugged in there and update map of motors so we can yell when there are more than one device on the same port");
-
     }
 }
 
@@ -21,8 +21,12 @@ impl Motor {
         }
         return self;
     }
-    pub fn set_voltage(&self, _: f32) {
-        todo!("set voltage")
+    pub fn set_voltage(&self, volts: f32) {
+        unsafe {
+            let modifier = 20.0;
+            let value = (volts * modifier) as i32; // convert from volts to i32s
+            api::vexDeviceMotorVoltageSet(api::vexDeviceGetByIndex(self.port.index()), value);
+        }
     }
     pub fn get_rotations(&self) -> f32 {
         todo!("get rotations");

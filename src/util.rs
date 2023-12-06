@@ -4,8 +4,6 @@ use newlib_alloc::Alloc;
 #[global_allocator]
 static ALLOCATOR: Alloc = Alloc;
 
-
-
 use alloc::string::ToString;
 
 use crate::api;
@@ -15,7 +13,7 @@ use crate::types::Color;
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
     let s = _info.to_string();
-
+    // 123.0.to_string();
     unsafe {
         loop {
             screen::clear_screen(Color::RED);

@@ -125,7 +125,7 @@ fn remove_unbindables(sdk_path: &String) -> String {
     return src_wout;
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 enum PathFindError {
     NoBuiltinPath,
 }
@@ -164,14 +164,20 @@ fn main() {
 
     // have to rebuild
     let builtin_path = find_sdk_path(&out_dir);
-    if !builtin_path.is_ok() {
+    let mut sdk_path: String = "".into();
+    if let Ok(builtin_p) = builtin_path {
+        sdk_path = builtin_p;
+    } else {
         // need to download sdk
         println!("cargo:warning=Couldn't find system headers. Specify in the VEX_SDK_PATH environment variable to use those headers. Downloading them now");
 
         download_sdk(&out_dir);
         unzip_sdk(&out_dir);
+        sdk_path += out_dir.as_str();
+        sdk_path += "/";
+        sdk_path += VERSION;
+        sdk_path += "/vexv5";
     }
-    let sdk_path = find_sdk_path(&out_dir).unwrap(); // we just created the path if it wasnt there. so it should be there now
     if !Path::new(bindings_path.as_str()).exists() {
         make_vex_bindings(&sdk_path, &out_dir);
     }
