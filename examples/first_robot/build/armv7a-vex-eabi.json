@@ -6,11 +6,13 @@
     "env": "newlib",
     "executables": true,
     "features": "+v7,+thumb2,+soft-float,-neon,+strict-align",
-    "linker": "arm-none-eabi-ld",
+    "linker": "arm-none-eabi-gcc",
     "post-link-args": {
-      "ld": [
+      "gcc": [
         "-nostdlib",
-        "-T/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/vexv5/lscript.ld"
+		"-nodefaultlibs",
+        "-Wl,--gc-sections",
+        "-Wl,-T/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/vexv5/lscript.ld"
       ]
     },
     "llvm-target": "armv7a-none-eabi",

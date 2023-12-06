@@ -199,7 +199,7 @@ pub type __gnuc_va_list = u32;
 pub type va_list = u32;
 #[doc = " @details\n   The first 16 bytes of a user code binary should contain the user code\n   signature.  For simple user code programs this will be created by the\n   startup code in the runtime library, certain types of user code,\n   for example a virtual machine, may override the default settings to cause\n   the V5 system code to enable custom functionality yet TBD.\n\n   to override the default use a definition like this in one of the user\n   code source files.\n\n   __attribute__ ((section (\".boot_data\"))) vcodesig vexCodeSig =\n   { V5_SIG_MAGIC,\n     V5_SIG_TYPE_USER,\n     V5_SIG_OWNER_VEX,\n     V5_SIG_OPTIONS_NONE\n   };\n\n   V5_SIG_MAGIC must be set, other fields and their behavior are TBD\n\n   vexCodeSig is defined as \"weak\" and this definition will override it."]
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _vcodesig {
     pub magic: u32,
     pub type_: u32,
@@ -210,7 +210,7 @@ pub struct _vcodesig {
 pub type vcodesig = _vcodesig;
 #[doc = " @brief      Structures used by system time functions"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct time {
     pub ti_hour: u8,
     #[doc = " Hours"]
@@ -221,7 +221,7 @@ pub struct time {
     pub ti_hund: u8,
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct date {
     pub da_year: u16,
     #[doc = " Year - 1980"]
@@ -257,7 +257,7 @@ pub const V5_DeviceType_kDeviceTypeUndefinedSensor: V5_DeviceType = 255;
 #[doc = " @brief      V5 Device type definitions"]
 pub type V5_DeviceType = ::core::ffi::c_uint;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_Device {
     _unused: [u8; 0],
 }
@@ -392,7 +392,7 @@ pub const _V5MotorGearset_kMotorGearSet_06: _V5MotorGearset = 2;
 pub type _V5MotorGearset = ::core::ffi::c_uint;
 pub use self::_V5MotorGearset as V5MotorGearset;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceMotorPid {
     pub kf: u8,
     pub kp: u8,
@@ -427,7 +427,7 @@ pub const V5VisionWifiMode_kVisionWifiModeOff: V5VisionWifiMode = 0;
 pub const V5VisionWifiMode_kVisionWifiModeOn: V5VisionWifiMode = 1;
 pub type V5VisionWifiMode = ::core::ffi::c_uint;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceVisionSignature {
     pub id: u8,
     pub flags: u8,
@@ -444,7 +444,7 @@ pub struct _V5_DeviceVisionSignature {
 }
 pub type V5_DeviceVisionSignature = _V5_DeviceVisionSignature;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceVisionObject {
     pub signature: u16,
     #[doc = " block signature"]
@@ -462,7 +462,7 @@ pub struct _V5_DeviceVisionObject {
 }
 pub type V5_DeviceVisionObject = _V5_DeviceVisionObject;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceVisionRgb {
     pub red: u8,
     pub green: u8,
@@ -472,7 +472,7 @@ pub struct _V5_DeviceVisionRgb {
 pub type V5_DeviceVisionRgb = _V5_DeviceVisionRgb;
 #[doc = " @brief      V5 IMU sensor definitions"]
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceImuQuaternion {
     pub a: f64,
     pub b: f64,
@@ -482,7 +482,7 @@ pub struct _V5_DeviceImuQuaternion {
 #[doc = " @brief      V5 IMU sensor definitions"]
 pub type V5_DeviceImuQuaternion = _V5_DeviceImuQuaternion;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceImuAttitude {
     pub pitch: f64,
     pub roll: f64,
@@ -490,7 +490,7 @@ pub struct _V5_DeviceImuAttitude {
 }
 pub type V5_DeviceImuAttitude = _V5_DeviceImuAttitude;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceImuRaw {
     pub x: f64,
     pub y: f64,
@@ -516,7 +516,7 @@ pub type _V5ImuQuaternionMode = ::core::ffi::c_uint;
 pub use self::_V5ImuQuaternionMode as V5ImuQuaternionMode;
 #[doc = " @brief      V5 Color sensor definitions"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceOpticalRaw {
     pub clear: u16,
     pub red: u16,
@@ -526,7 +526,7 @@ pub struct _V5_DeviceOpticalRaw {
 #[doc = " @brief      V5 Color sensor definitions"]
 pub type V5_DeviceOpticalRaw = _V5_DeviceOpticalRaw;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceOpticalRgb {
     pub red: f64,
     pub green: f64,
@@ -535,7 +535,7 @@ pub struct _V5_DeviceOpticalRgb {
 }
 pub type V5_DeviceOpticalRgb = _V5_DeviceOpticalRgb;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceOpticalGesture {
     pub udata: u8,
     pub ddata: u8,
@@ -557,7 +557,7 @@ pub type _V5_DeviceMagnetDuration = ::core::ffi::c_uint;
 pub use self::_V5_DeviceMagnetDuration as V5_DeviceMagnetDuration;
 #[doc = " @brief      V5 gps definitions"]
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceGpsQuaternion {
     pub a: f64,
     pub b: f64,
@@ -567,7 +567,7 @@ pub struct _V5_DeviceGpsQuaternion {
 #[doc = " @brief      V5 gps definitions"]
 pub type V5_DeviceGpsQuaternion = _V5_DeviceGpsQuaternion;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceGpsAttitude {
     pub pitch: f64,
     pub roll: f64,
@@ -581,7 +581,7 @@ pub struct _V5_DeviceGpsAttitude {
 }
 pub type V5_DeviceGpsAttitude = _V5_DeviceGpsAttitude;
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceGpsRaw {
     pub x: f64,
     pub y: f64,
@@ -591,7 +591,7 @@ pub struct _V5_DeviceGpsRaw {
 pub type V5_DeviceGpsRaw = _V5_DeviceGpsRaw;
 #[doc = " @brief      V5 AI Camera definitions"]
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_DeviceAicamObject {
     pub type_: i16,
     pub xpos: i16,
@@ -652,7 +652,7 @@ pub type _touchEvent = ::core::ffi::c_uint;
 #[doc = " @brief      V5 touch events"]
 pub use self::_touchEvent as V5_TouchEvent;
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _V5_TouchStatus {
     pub lastEvent: V5_TouchEvent,
     pub lastXpos: i16,
@@ -663,7 +663,7 @@ pub struct _V5_TouchStatus {
 pub type V5_TouchStatus = _V5_TouchStatus;
 #[doc = " @brief   structure holding image info - used by bmp/png read code"]
 #[repr(C, packed)]
-#[derive(Debug, Copy, Clone)]
+#[derive( Copy, Clone)]
 pub struct _v5_image {
     pub width: u16,
     pub height: u16,

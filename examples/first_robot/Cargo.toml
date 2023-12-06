@@ -2,10 +2,14 @@
 name = "first_robot"
 version = "0.1.0"
 edition = "2021"
-[lib]
-crate-type=["staticlib"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 vex-rs = {path = "/home/richie/VEX/vex-rs"}
+
+[profile.release]
+opt-level = 's'     # Optimize for size
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+lto = true
+panic = "abort"
