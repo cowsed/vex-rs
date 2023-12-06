@@ -171,13 +171,7 @@ fn main() {
 
         download_sdk(&out_dir);
         unzip_sdk(&out_dir);
-    } else {
-        println!(
-            "cargo:warning=Using installed headers at {}",
-            builtin_path.unwrap()
-        );
     }
-
     let sdk_path = find_sdk_path(&out_dir).unwrap(); // we just created the path if it wasnt there. so it should be there now
     if !Path::new(bindings_path.as_str()).exists() {
         make_vex_bindings(&sdk_path, &out_dir);
