@@ -3,7 +3,8 @@ use crate::api;
 
 unsafe impl GlobalAlloc for Alloc {
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
-        api::malloc(layout.size()) as *mut _
+        let ptr: *mut *mut c_void = core::ptr::null_mut();
+        api::posix_memalign(ptr, layout.align(), layout.size()) as *mut _
     }
 
     unsafe fn dealloc(&self, ptr: *mut u8, _layout: Layout) {

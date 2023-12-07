@@ -1,0 +1,17 @@
+[package]
+name = "with_vex_math"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+vex-rs = {path = "/home/richie/VEX/vex-rs"}
+vex-math = {git = "https://github.com/MJE10/vex-math"}
+qunit = { version = "0.1.0-beta.3", default-features = false, features = ["math", "libm"] }
+
+[profile.release]
+opt-level = 's'     # Optimize for size
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+lto = true
+panic = "abort"

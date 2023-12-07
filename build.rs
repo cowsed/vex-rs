@@ -35,15 +35,7 @@ fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
             remove_unbindables(sdk_path).as_str(),
         )
         .header(header_path("vex_competition.h"))
-        .header_contents(
-            "extra",
-            r#"
-        typedef unsigned int size_t; // found by static asserting in real vex project
-            void free(void*);
-            void *malloc(size_t size);
-        "#,
-        )
-        // .header("extra")
+
         // Finish the builder and generate the bindings.
         .generate()
         .expect("Unable to generate bindings");

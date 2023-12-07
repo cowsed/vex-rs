@@ -1,4 +1,4 @@
-#[derive( Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 pub enum Port {
     Port1,
     Port2,

@@ -1,13 +1,14 @@
 use crate::api;
 use crate::types::Port;
+#[derive(Debug)]
 pub struct Motor {
     port: Port,
 }
 
 impl Motor {
     pub fn new(_port: Port) -> Motor {
-        // return Motor{port: _port};
-        todo!("make sure motor type aligns with what vex thinks is plugged in there and update map of motors so we can yell when there are more than one device on the same port");
+        return Motor{port: _port};
+        // todo!("make sure motor type aligns with what vex thinks is plugged in there and update map of motors so we can yell when there are more than one device on the same port");
     }
 }
 
@@ -29,6 +30,7 @@ impl Motor {
         }
     }
     pub fn get_rotations(&self) -> f32 {
-        todo!("get rotations");
+        // todo!("get rotations");
+        return 0.0;
     }
 }

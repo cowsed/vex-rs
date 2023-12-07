@@ -390,15 +390,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "newlib-alloc"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ca3abd6d23c70f63ea85deea80a6a16252967156e5220e0bb8a9d5a7de42119"
-dependencies = [
- "libc",
-]
-
-[[package]]
 name = "nom"
 version = "7.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -687,7 +678,6 @@ version = "0.1.0"
 dependencies = [
  "bindgen",
  "curl",
- "newlib-alloc",
  "zip",
 ]
 
