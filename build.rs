@@ -131,23 +131,7 @@ enum PathFindError {
 }
 
 fn find_sdk_path(out_dir: &String) -> Result<String, PathFindError> {
-    let builtin_sdk_path = env::var("VEX_SDK_PATH");
-    if builtin_sdk_path.is_ok() {
-        let p = builtin_sdk_path.unwrap();
-        if Path::new(p.as_str()).exists() {
-            return Ok(p);
-        }
-    }
-
-    let vscode_sdk_path_linux = format!(
-        "~/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/{}/vexv5",
-        VERSION
-    );
-    if Path::new(vscode_sdk_path_linux.as_str()).exists() {
-        return Ok(vscode_sdk_path_linux.into());
-    }
-
-    // Or if we have them from a previous install
+    // If we have them from a previous install
     let target_path = format!("{}/{}/vexv5", out_dir, VERSION);
     if Path::new(target_path.as_str()).exists() {
         return Ok(target_path);
