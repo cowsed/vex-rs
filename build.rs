@@ -164,7 +164,7 @@ fn main() {
         sdk_path = builtin_p;
     } else {
         // need to download sdk
-        println!("cargo:warning=Couldn't find system headers. Specify in the VEX_SDK_PATH environment variable to use those headers. Downloading them now");
+        println!("cargo:warning=Couldn't find system headers. Downloading them now");
 
         download_sdk(&out_dir);
         unzip_sdk(&out_dir);
