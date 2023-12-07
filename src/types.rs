@@ -63,7 +63,7 @@ pub struct Rect {
     pub x2: i32,
     pub y2: i32,
 }
-#[derive( Clone, Copy)]
+#[derive( Clone, Copy, PartialEq, Eq)]
 pub struct Color {
     pub r: u8,
     pub g: u8,

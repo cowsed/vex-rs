@@ -13,4 +13,4 @@ size=$(du -h ${bin_path} | cut -f1)
 echo -e "\n========    Flash - ${bin_name} - ${size}    =======\n"
 
 # flash the guy
-$HOME/.vscode/extensions/vexrobotics.vexcode-0.5.0/resources/tools/vexcom/linux-x64/vexcom --slot 1 --write ${bin_path}
+$HOME/.vscode/extensions/vexrobotics.vexcode-0.5.0/resources/tools/vexcom/linux-x64/vexcom --slot 1 --write ${bin_path} --progress --timer

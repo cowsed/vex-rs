@@ -83,7 +83,7 @@ fn download_sdk(out_dir: &String) {
 }
 
 fn unzip_sdk(out_dir: &String) {
-    let f = File::open(SDK_ZIP_PATH).expect("Couldn't open sdk zip path");
+    let f = File::open(format!("{}/{}", out_dir, SDK_ZIP_PATH)).expect("Couldn't open sdk zip path");
     let reader = BufReader::new(f);
     ZipArchive::new(reader)
         .expect("Failed to decode sdk zip")
