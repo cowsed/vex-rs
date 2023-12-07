@@ -1,8 +1,5 @@
-extern crate alloc;
-use newlib_alloc::Alloc;
 
-#[global_allocator]
-static ALLOCATOR: Alloc = Alloc;
+extern crate alloc;
 
 use alloc::string::ToString;
 

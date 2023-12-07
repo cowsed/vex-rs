@@ -35,6 +35,15 @@ fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
             remove_unbindables(sdk_path).as_str(),
         )
         .header(header_path("vex_competition.h"))
+        .header_contents(
+            "extra",
+            r#"
+        typedef unsigned int size_t; // found by static asserting in real vex project
+            void free(void*);
+            void *malloc(size_t size);
+        "#,
+        )
+        // .header("extra")
         // Finish the builder and generate the bindings.
         .generate()
         .expect("Unable to generate bindings");
@@ -83,7 +92,9 @@ fn download_sdk(out_dir: &String) {
 }
 
 fn unzip_sdk(out_dir: &String) {
-    let f = File::open(SDK_ZIP_PATH).expect("Couldn't open sdk zip path");
+    let full_zip_path = format!("{}/{}", out_dir, SDK_ZIP_PATH);
+
+    let f = File::open(full_zip_path).expect("Couldn't open sdk zip path");
     let reader = BufReader::new(f);
     ZipArchive::new(reader)
         .expect("Failed to decode sdk zip")

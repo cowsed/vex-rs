@@ -14,5 +14,6 @@ pub mod motor;
 pub mod screen;
 pub mod time;
 pub mod util;
+pub mod alloc;
 
 mod api;
