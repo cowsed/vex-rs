@@ -1,4 +1,5 @@
 
+const target_file:&str = r#"
 {
     "arch": "arm",
     "data-layout": "e-m:e-p:32:32-Fi8-i64:64-v128:64:128-a:0:32-n32-S64",
@@ -12,7 +13,9 @@
       "gcc": [
         "-nostdlib",
         "-nodefaultlibs",
-        "-Wl,--gc-sections"
+        "-Wl,--gc-sections",
+        "-Wl,-T/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/vexv5/lscript.ld",
+        "-Wl,-R\"/home/richie/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/vexv5/stdlib_0.lib\""
       ]
     },
     "llvm-target": "armv7a-none-eabi",
@@ -26,3 +29,11 @@
     "target-pointer-width": "32",
     "vendor": "vex"
   }
+"#;
+
+use std::{fs::File, io::Write};
+fn main(){
+    let mut file = File::create("build/armv7a-vex-eabi.json").expect("msg");
+    // file.write_all(target_file.)?;
+    file.write(target_file.as_bytes()).expect("asdsadas");
+}
