@@ -6,4 +6,4 @@ target = "build/armv7a-vex-eabi.json"
 build-std = ["core", "alloc"]
 
 [target.armv7a-vex-eabi]
-runner = "bash build/flash.sh"
+runner = "python build/flash.py"
