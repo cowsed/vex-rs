@@ -1,3 +1,4 @@
 /target
 /examples/first_robot/target
 /examples/first_robot/build/armv7a-vex-eabi.json
+/.idea/
