@@ -1,6 +1,6 @@
 fn find_sdk_path() -> String {
     let windows_sdk_path: String = "C:/Program Files (x86)/VEX Robotics/VEXcode V5/sdk".into();
-    let linux_sdk_path: String = "/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk".into();
+    let linux_sdk_path: String = "/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/".into();
     if cfg!(windows) {
         windows_sdk_path
     } else {
@@ -8,26 +8,14 @@ fn find_sdk_path() -> String {
     }
 }
 
-fn find_vexcom_path() -> String {
-    let windows_vexcom_path: String =
-        r#"~/.vscode\extensions\vexrobotics.vexcode-0.5.0\resources\tools\vexcom\win32\vexcom.exe"#
-            .into();
-    let linux_vexcom_path: String = r#"~/.vscode/extensions/vexrobotics.vexcode-0.5.0/resources/tools/vexcom/linux-arm64/vexcom"#.into();
-    if cfg!(windows) {
-        windows_vexcom_path
-    } else {
-        let home = env!("HOME");
-        format!("{}/{}", home, linux_vexcom_path)
-    }
-}
 
 fn main() {
     let lscript_arg = format!(
-        "-Wl,-T{}/cpp/V5/V5_20220726_10_00_00/vexv5/lscript.ld",
+        "-Wl,-T{}/vexv5/lscript.ld",
         find_sdk_path()
     );
     let stdlib_arg = format!(
-        "-Wl,-R{}/cpp/V5/V5_20220726_10_00_00/vexv5/stdlib_0.lib",
+        "-Wl,-R{}/vexv5/stdlib_0.lib",
         find_sdk_path()
     );
 

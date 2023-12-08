@@ -167,4 +167,15 @@ fn main() {
         make_vex_bindings(&sdk_path, &out_dir);
     }
 
+    // make_flash_script();/
+
+    println!("cargo:rustc-link-search={}", sdk_path);
+    println!("cargo:rustc-link-search={}/gcc/libs", sdk_path);
+    println!("cargo:rustc-link-arg=-R{}/vexv5/stdlib_0.lib", sdk_path);
+
+    println!("cargo:rustc-link-lib=static=v5rt");
+    println!("cargo:rustc-link-lib=static=stdc++");
+    println!("cargo:rustc-link-lib=static=c");
+    println!("cargo:rustc-link-lib=static=m");
+    println!("cargo:rustc-link-lib=static=gcc");
 }
