@@ -1,10 +1,9 @@
 use crate::api;
-use crate::types::{Rect, Color};
+use crate::types::{Color, Rect};
 
 extern crate alloc;
 use alloc::ffi::CString;
 use alloc::string::String;
-
 
 pub fn clear_screen(c: Color) {
     let full_screen = Rect {
@@ -15,11 +14,19 @@ pub fn clear_screen(c: Color) {
     };
     draw_rectangle(full_screen, c, Some(c))
 }
-
-pub fn draw_text(x: i32, y: i32, s: &String) {
-    let s = CString::new(s.as_str()).expect("Couldn't form CString from string passed to draw_text");
+pub fn render() {
+    unsafe {
+        api::vexDisplayRender(true, true);
+    }
+}
+pub fn draw_text(x: i32, y: i32, s: &String, col: Color) {
+    let s =
+        CString::new(s.as_str()).expect("Couldn't form CString from string passed to draw_text");
     let s = s.as_c_str();
-    unsafe { api::vexDisplayStringAt(x, y, s.as_ptr()) }
+    unsafe {
+        api::vexDisplayForegroundColor(col.into());
+        api::vexDisplayStringAt(x, y, s.as_ptr())
+    }
 }
 
 pub fn draw_rectangle(r: Rect, stroke: Color, fill: Option<Color>) {

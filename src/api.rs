@@ -3,3 +3,7 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+
+extern "C" {
+    pub fn printf(fmt: *const ::core::ffi::c_char, ...) -> i32;
+}

@@ -1,4 +1,7 @@
-#[derive( Clone, Copy)]
+use crate::api;
+
+use core::fmt::Display;
+#[derive(Clone, Copy)]
 pub enum Port {
     Port1,
     Port2,
@@ -22,32 +25,62 @@ pub enum Port {
     Port20,
     Port21,
 }
+impl Display for Port {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        let s = match self {
+            Port::Port1 => "Port1",
+            Port::Port2 => "Port2",
+            Port::Port3 => "Port3",
+            Port::Port4 => "Port4",
+            Port::Port5 => "Port5",
+            Port::Port6 => "Port6",
+            Port::Port7 => "Port7",
+            Port::Port8 => "Port8",
+            Port::Port9 => "Port9",
+            Port::Port10 => "Port10",
+            Port::Port11 => "Port11",
+            Port::Port12 => "Port12",
+            Port::Port13 => "Port13",
+            Port::Port14 => "Port14",
+            Port::Port15 => "Port15",
+            Port::Port16 => "Port16",
+            Port::Port17 => "Port17",
+            Port::Port18 => "Port18",
+            Port::Port19 => "Port19",
+            Port::Port20 => "Port20",
+            Port::Port21 => "Port21",
+        };
+        write!(f, "{}", s)
+    }
+}
 
 impl Port {
-    pub(crate) fn index(self) -> u32 {
-        return match self {
-            Port::Port1 => 0,
-            Port::Port2 => 1,
-            Port::Port3 => 2,
-            Port::Port4 => 3,
-            Port::Port5 => 4,
-            Port::Port6 => 5,
-            Port::Port7 => 6,
-            Port::Port8 => 7,
-            Port::Port9 => 8,
-            Port::Port10 => 9,
-            Port::Port11 => 10,
-            Port::Port12 => 11,
-            Port::Port13 => 12,
-            Port::Port14 => 13,
-            Port::Port15 => 14,
-            Port::Port16 => 15,
-            Port::Port17 => 16,
-            Port::Port18 => 17,
-            Port::Port19 => 18,
-            Port::Port20 => 19,
-            Port::Port21 => 20,
-        };
+    pub(crate) fn index(self) -> i32 {
+        unsafe {
+            return match self {
+                Port::Port1 => api::vex_PORT1,
+                Port::Port2 => api::vex_PORT2,
+                Port::Port3 => api::vex_PORT3,
+                Port::Port4 => api::vex_PORT4,
+                Port::Port5 => api::vex_PORT5,
+                Port::Port6 => api::vex_PORT6,
+                Port::Port7 => api::vex_PORT7,
+                Port::Port8 => api::vex_PORT8,
+                Port::Port9 => api::vex_PORT9,
+                Port::Port10 => api::vex_PORT10,
+                Port::Port11 => api::vex_PORT11,
+                Port::Port12 => api::vex_PORT12,
+                Port::Port13 => api::vex_PORT13,
+                Port::Port14 => api::vex_PORT14,
+                Port::Port15 => api::vex_PORT15,
+                Port::Port16 => api::vex_PORT16,
+                Port::Port17 => api::vex_PORT17,
+                Port::Port18 => api::vex_PORT18,
+                Port::Port19 => api::vex_PORT19,
+                Port::Port20 => api::vex_PORT20,
+                Port::Port21 => api::vex_PORT21,
+            };
+        }
     }
 }
 
@@ -56,14 +89,14 @@ pub enum Direction {
     Reverse,
 }
 
-#[derive( Clone)]
+#[derive(Clone)]
 pub struct Rect {
     pub x1: i32,
     pub y1: i32,
     pub x2: i32,
     pub y2: i32,
 }
-#[derive( Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub struct Color {
     pub r: u8,
     pub g: u8,

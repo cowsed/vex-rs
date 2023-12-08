@@ -13,6 +13,15 @@ use crate::screen;
 use crate::types::Color;
 use alloc::ffi::CString;
 
+pub fn print(s: String){
+    let s = CString::new(s).expect("failed to unwrap string");
+    let s = s.as_c_str();
+    unsafe{
+        api::printf(s.as_ptr());
+        api::vexControllerTextSet(crate::controller::Type::Primary.into(), 1,1, s.as_ptr());
+    }
+}
+
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
     let chars_per_line = 35;
@@ -30,7 +39,6 @@ fn panic(_info: &core::panic::PanicInfo) -> ! {
     unsafe {
         loop {
             screen::clear_screen(col);
-            // screen::draw_text(20, 20, s);
             api::vexDisplayForegroundColor(0xFFFFFFF);
             for (num, line) in lines.iter().enumerate() {
                 let s = line.as_c_str();
