@@ -49,49 +49,6 @@ fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
         .expect("Couldn't write bindings!");
 }
 
-fn download_sdk(out_dir: &String) {
-    let full_zip_path = format!("{}/{}", out_dir, SDK_ZIP_PATH);
-    let full_zip_path = full_zip_path.as_str();
-
-    let mut dst = Vec::new();
-    let mut easy = Easy::new();
-    easy.url(
-        format!(
-            "https://content.vexrobotics.com/vexos/public/V5/vscode/sdk/cpp/{}.zip",
-            VERSION
-        )
-        .as_str(),
-    )
-    .expect("Couldn't download sdk zip");
-    let _redirect = easy.follow_location(true);
-
-    {
-        let mut transfer = easy.transfer();
-        transfer
-            .write_function(|data| {
-                dst.extend_from_slice(data);
-                Ok(data.len())
-            })
-            .unwrap();
-        transfer.perform().unwrap();
-    }
-    {
-        let mut file = File::create(full_zip_path).expect("Downloaded sdk not there");
-        file.write_all(dst.as_slice())
-            .expect(format!("Couldnt write file to {}", full_zip_path).as_str());
-    }
-}
-
-fn unzip_sdk(out_dir: &String) {
-    let f =
-        File::open(format!("{}/{}", out_dir, SDK_ZIP_PATH)).expect("Couldn't open sdk zip path");
-    let reader = BufReader::new(f);
-    ZipArchive::new(reader)
-        .expect("Failed to decode sdk zip")
-        .extract(out_dir)
-        .expect("Couldn't decode sdk zip");
-}
-
 // bindgen really does not like the templates in vex_brain.h
 fn remove_unbindables(sdk_path: &String) -> String {
     let ranges: Vec<(usize, usize)> = vec![
@@ -127,18 +84,21 @@ fn remove_unbindables(sdk_path: &String) -> String {
 }
 
 #[derive(Clone, Copy)]
-enum PathFindError {
-    NoBuiltinPath,
-}
 
-fn find_sdk_path(out_dir: &String) -> Result<String, PathFindError> {
-    // If we have them from a previous install
-    let target_path = format!("{}/{}/vexv5", out_dir, VERSION);
-    if Path::new(target_path.as_str()).exists() {
-        return Ok(target_path);
+fn find_sdk_path() -> Option<String> {
+    let windows_sdk_path: String = "C:/Program Files (x86)/VEX Robotics/VEXcode V5/sdk".into();
+    let linux_sdk_path: String =
+        "/.config/Code/User/globalStorage/vexrobotics.vexcode/sdk/cpp/V5/V5_20220726_10_00_00/"
+            .into();
+    if cfg!(windows) {
+        Some(windows_sdk_path)
+    } else {
+        Some(format!(
+            "{}/{}",
+            env::var("HOME").expect("Need HOME env variable for linux"),
+            linux_sdk_path
+        ))
     }
-
-    return Err(PathFindError::NoBuiltinPath);
 }
 
 fn main() {
@@ -147,30 +107,15 @@ fn main() {
 
     let bindings_path = format!("{}/bindings.rs", out_dir);
 
-    // have to rebuild
-    let builtin_path = find_sdk_path(&out_dir);
-    let mut sdk_path: String = "".into();
-    if let Ok(builtin_p) = builtin_path {
-        sdk_path = builtin_p;
-    } else {
-        // need to download sdk
-        println!("cargo:warning=Couldn't find system headers. Downloading them now");
+    let sdk_path = find_sdk_path().expect("Couldn't find the sdk path");
 
-        download_sdk(&out_dir);
-        unzip_sdk(&out_dir);
-        sdk_path += out_dir.as_str();
-        sdk_path += "/";
-        sdk_path += VERSION;
-        sdk_path += "/vexv5";
-    }
+    // have to rebuild
     if !Path::new(bindings_path.as_str()).exists() {
         make_vex_bindings(&sdk_path, &out_dir);
     }
 
-    // make_flash_script();/
-
-    println!("cargo:rustc-link-search={}", sdk_path);
-    println!("cargo:rustc-link-search={}/gcc/libs", sdk_path);
+    println!("cargo:rustc-link-search={}/vexv5", sdk_path);
+    println!("cargo:rustc-link-search={}/vexv5/gcc/libs", sdk_path);
     println!("cargo:rustc-link-arg=-R{}/vexv5/stdlib_0.lib", sdk_path);
 
     println!("cargo:rustc-link-lib=static=v5rt");
