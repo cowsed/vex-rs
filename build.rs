@@ -83,7 +83,8 @@ fn download_sdk(out_dir: &String) {
 }
 
 fn unzip_sdk(out_dir: &String) {
-    let f = File::open(format!("{}/{}", out_dir, SDK_ZIP_PATH)).expect("Couldn't open sdk zip path");
+    let f =
+        File::open(format!("{}/{}", out_dir, SDK_ZIP_PATH)).expect("Couldn't open sdk zip path");
     let reader = BufReader::new(f);
     ZipArchive::new(reader)
         .expect("Failed to decode sdk zip")
@@ -165,13 +166,5 @@ fn main() {
     if !Path::new(bindings_path.as_str()).exists() {
         make_vex_bindings(&sdk_path, &out_dir);
     }
-    println!("cargo:rustc-link-search={}", sdk_path);
-    println!("cargo:rustc-link-search={}/gcc/libs", sdk_path);
-    println!("cargo:rustc-link-arg=-R{}/vexv5/stdlib_0.lib", sdk_path);
 
-    println!("cargo:rustc-link-lib=static=v5rt");
-    println!("cargo:rustc-link-lib=static=stdc++");
-    println!("cargo:rustc-link-lib=static=c");
-    println!("cargo:rustc-link-lib=static=m");
-    println!("cargo:rustc-link-lib=static=gcc");
 }
