@@ -12,7 +12,7 @@ extern crate alloc;
 use alloc::format;
 use alloc::string::ToString;
 
-#[no_mangle]
+#[no_mangle] 
 fn main() {
     op();
     competition::set_opcontrol(op);
