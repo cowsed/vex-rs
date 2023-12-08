@@ -1,18 +1,11 @@
-const VERSION: &str = "V5_20220726_10_00_00";
-const SDK_ZIP_PATH: &str = "sdk.zip";
 
-use curl::easy::Easy;
-use std::fs;
-use std::fs::File;
-use std::io::BufReader;
-use std::io::Write;
 use std::path::Path;
 use std::path::PathBuf;
 use std::{env, vec};
-use zip::read::ZipArchive;
+use std::fs;
 
 fn make_vex_bindings(sdk_path: &String, out_dir: &String) {
-    let header_path = |fname: &str| format!("{}/include/{}", sdk_path, fname);
+    let header_path = |fname: &str| format!("{}/vexv5/include/{}", sdk_path, fname);
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
     // the resulting bindings.
@@ -62,7 +55,7 @@ fn remove_unbindables(sdk_path: &String) -> String {
     ];
     let in_range = |i, &(lo, hi)| i >= lo && i <= hi;
 
-    let path = format!("{}/include/vex_brain.h", sdk_path);
+    let path = format!("{}/vexv5/include/vex_brain.h", sdk_path);
     let str = fs::read_to_string(&path).expect("Couldn't open vex_brain.h to fix template stuff");
 
     let oglines: Vec<&str> = str.lines().collect();
@@ -83,7 +76,6 @@ fn remove_unbindables(sdk_path: &String) -> String {
     return src_wout;
 }
 
-#[derive(Clone, Copy)]
 
 fn find_sdk_path() -> Option<String> {
     let windows_sdk_path: String = "C:/Program Files (x86)/VEX Robotics/VEXcode V5/sdk".into();
