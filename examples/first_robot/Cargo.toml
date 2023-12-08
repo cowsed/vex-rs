@@ -6,9 +6,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-vex-rs = {path = "/home/richie/VEX/vex-rs"}
+vex-rs = {path = "../../"}
 
 [profile.release]
+opt-level = 's'     # Optimize for size
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+lto = true
+panic = "abort"
+
+[profile.dev]
 opt-level = 's'     # Optimize for size
 codegen-units = 1   # Reduce number of codegen units to increase optimizations
 lto = true
